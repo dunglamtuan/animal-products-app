@@ -3,7 +3,7 @@ create table user_account(
   username varchar(50) PRIMARY KEY
 );
 
-create type animal_category as ENUM ('dogs', 'cats', 'other');
+create type animal_category as ENUM ('DOGS', 'CATS', 'OTHER');
 
 create table product (
   id integer PRIMARY KEY,

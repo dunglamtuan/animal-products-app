@@ -4,5 +4,5 @@ public enum AnimalCategory {
 
   DOGS,
   CATS,
-  OTHERS
+  OTHER
 }

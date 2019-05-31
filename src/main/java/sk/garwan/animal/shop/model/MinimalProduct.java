@@ -1,6 +1,6 @@
 package sk.garwan.animal.shop.model;
 
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
+
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,18 +12,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 
 @Entity
 @Table(name = "product")
-@TypeDefs({@TypeDef(name = "string-array", typeClass = StringArrayType.class)})
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class Product {
+public class MinimalProduct {
 
   @Id
   private Integer id;
@@ -37,12 +33,5 @@ public class Product {
 
   @Column
   private BigDecimal price;
-
-  @Column
-  private String description;
-
-  @Type(type = "string-array")
-  @Column(name = "gallery", columnDefinition = "text[]")
-  private String[] gallery;
 
 }
