@@ -9,6 +9,6 @@ public interface ProductService {
 
   Optional<Product> findById(Integer id);
 
-  List<MinimalProduct> findProductsWithPageAndSort(int page, int pageSize);
+  List<MinimalProduct> findProductsWithPageAndSort(int page, int pageSize, String asc);
 
 }

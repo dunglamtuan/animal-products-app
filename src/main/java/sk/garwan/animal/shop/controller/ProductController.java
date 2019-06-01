@@ -20,10 +20,12 @@ public class ProductController {
   private final ProductService service;
 
   @GetMapping(value = "/products")
-  public ResponseEntity<List<MinimalProduct>> handleProductsGetRequest(@RequestParam("page") int page,
-      @RequestParam("pSize") Integer pageSize) {
+  public ResponseEntity<List<MinimalProduct>> handleProductsGetRequest(
+    @RequestParam("page") int page,
+    @RequestParam("pSize") Integer pageSize,
+    @RequestParam(value = "sorting", required = false) String sorting) {
 
-    List<MinimalProduct> resultProducts = service.findProductsWithPageAndSort(page, pageSize);
+    List<MinimalProduct> resultProducts = service.findProductsWithPageAndSort(page, pageSize, sorting);
     return new ResponseEntity<>(resultProducts, HttpStatus.OK);
   }
 

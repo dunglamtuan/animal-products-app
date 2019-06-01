@@ -5,6 +5,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import sk.garwan.animal.shop.model.MinimalProduct;
 import sk.garwan.animal.shop.model.Product;
@@ -13,7 +14,9 @@ import sk.garwan.animal.shop.repository.ProductRepository;
 
 @Service
 @AllArgsConstructor
-public class SimpleProductService implements ProductService{
+public class SimpleProductService implements ProductService {
+
+  private static final String DESC_SORTING_STRATEGY = "desc";
 
   private final ProductRepository productRepository;
   private final MinimalProductRepository minimalProductRepository;
@@ -24,8 +27,14 @@ public class SimpleProductService implements ProductService{
   }
 
   @Override
-  public List<MinimalProduct> findProductsWithPageAndSort(int page, int pageSize) {
-    Pageable pageable = PageRequest.of(page, pageSize);
+  public List<MinimalProduct> findProductsWithPageAndSort(int page, int pageSize, String asc) {
+
+    Pageable pageable;
+    if (asc == null || !asc.equalsIgnoreCase(DESC_SORTING_STRATEGY)) {
+      pageable = PageRequest.of(page, pageSize, Sort.by("price").ascending());
+    } else {
+      pageable = PageRequest.of(page, pageSize, Sort.by("price").descending());
+    }
 
     return minimalProductRepository.findAll(pageable).getContent();
   }
