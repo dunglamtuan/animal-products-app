@@ -21,6 +21,7 @@
     <flyway.version>5.2.4</flyway.version>
     <hibernate-types.version>2.4.3</hibernate-types.version>
     <assertj-core.version>3.12.2</assertj-core.version>
+    <google-guava.version>27.0-jre</google-guava.version>
   </properties>
 
   <dependencies>
@@ -60,6 +61,11 @@
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
       <version>${flyway.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${google-guava.version}</version>
     </dependency>
 
     <!--Test dependencies-->
