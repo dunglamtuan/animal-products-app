@@ -1,4 +1,4 @@
-create table user_account(
+create table if not exists user_account(
   id serial PRIMARY KEY,
   email varchar(50),
   username varchar(50)
@@ -6,7 +6,7 @@ create table user_account(
 
 create type animal_category as ENUM ('DOGS', 'CATS', 'OTHER');
 
-create table product (
+create table if not exists product (
   id serial PRIMARY KEY,
   name varchar(50),
   animalCategory animal_category,
@@ -15,7 +15,7 @@ create table product (
   gallery text[]
 );
 
-create table orders (
+create table if not exists orders (
   id serial PRIMARY KEY,
   totalPrice numeric,
   time timestamp

@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +29,8 @@ import org.hibernate.annotations.TypeDefs;
 public class Product {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "product_id_sequence", strategy = GenerationType.SEQUENCE)
+  @SequenceGenerator(name = "product_id_sequence", sequenceName = "product_id_sequence")
   private Integer id;
 
   @Column
