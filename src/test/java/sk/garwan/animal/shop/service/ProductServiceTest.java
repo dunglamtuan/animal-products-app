@@ -61,7 +61,7 @@ public class ProductServiceTest {
   @Test
   public void getProductsTest() {
     //execute
-    List<MinimalProduct> products = productService.findProductsWithPageAndSort(0, 2);
+    List<MinimalProduct> products = productService.findProductsWithPageAndSort(0, 2, null);
 
     //verify
     assertThat(products.size()).isEqualTo(1);
