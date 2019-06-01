@@ -1,7 +1,7 @@
 create table if not exists user_account(
   id serial PRIMARY KEY,
   email varchar(50),
-  username varchar(50)
+  username varchar(50) unique
 );
 
 create type animal_category as ENUM ('DOGS', 'CATS', 'OTHER');
@@ -13,11 +13,5 @@ create table if not exists product (
   price numeric,
   description text,
   gallery text[]
-);
-
-create table if not exists orders (
-  id serial PRIMARY KEY,
-  totalPrice numeric,
-  time timestamp
 );
 
