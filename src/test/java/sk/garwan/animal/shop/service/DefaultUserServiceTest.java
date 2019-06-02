@@ -32,14 +32,11 @@ public class DefaultUserServiceTest {
     when(userRepository.findByUsername(anyString())).thenReturn(null);
 
     //execute
-    Optional<User> persistedUser = userService
+    Optional<String> token = userService
         .registerNewUser(User.builder().password("any").build());
 
     //verify
-    assertThat(persistedUser).isPresent();
-    assertThat(persistedUser.get().getUsername()).isEqualToIgnoringCase("username");
-    assertThat(persistedUser.get().getEmail()).isEqualToIgnoringCase("email1");
-    assertThat(persistedUser.get().getPassword()).isEqualToIgnoringCase(testPassword);
+    assertThat(token).isPresent();
   }
 
 }
