@@ -2,6 +2,7 @@ package sk.garwan.animal.shop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -20,14 +21,19 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 @Entity
 @Table(name = "orders")
+@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Order implements Serializable {
 
   @Id
@@ -52,6 +58,7 @@ public class Order implements Serializable {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "current_order_status")
+  @Type(type = "pgsql_enum")
   private OrderStatus orderStatus;
 
 }
