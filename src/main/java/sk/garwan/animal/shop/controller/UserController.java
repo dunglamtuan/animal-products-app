@@ -33,7 +33,7 @@ public class UserController {
         .orElseGet(() -> new ResponseEntity<>(new JwtTokenResponse(null), HttpStatus.CONFLICT));
   }
 
-  @GetMapping("/auth/login")
+  @GetMapping("/login")
   @ResponseBody
   public ResponseEntity<JwtTokenResponse> handleLoginRequest(
       @RequestParam("username") String username,
