@@ -7,6 +7,6 @@ import sk.garwan.animal.shop.model.Order;
 public interface OrderService {
 
   List<Order> findOrderByUserName(String username);
-  boolean confirmNewOrder(List<CartItem> items);
+  boolean confirmNewOrder(List<CartItem> items, String username);
 
 }

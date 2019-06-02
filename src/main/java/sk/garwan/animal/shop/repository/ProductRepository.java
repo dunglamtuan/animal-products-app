@@ -9,4 +9,5 @@ import sk.garwan.animal.shop.model.Product;
 public interface ProductRepository extends CrudRepository<Product, Integer> {
 
   Optional<Product> findById(Integer integer);
+  Product findByName(String name);
 }
