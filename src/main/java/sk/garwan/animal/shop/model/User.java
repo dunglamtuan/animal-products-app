@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "user_account")
@@ -33,4 +34,8 @@ public class User {
 
   @Column(nullable = false)
   private String password;
+
+  @Column(name="isadmin")
+  @ColumnDefault("false")
+  private Boolean isAdmin;
 }
