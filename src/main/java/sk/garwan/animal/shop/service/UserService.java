@@ -6,7 +6,8 @@ import sk.garwan.animal.shop.model.User;
 
 public interface UserService {
 
-  Optional<User> registerNewUser(User user) throws UserAlreadyExistsException;
+  Optional<String> registerNewUser(User user) throws UserAlreadyExistsException;
   User findUserByUserName(String username);
+  Optional<String> logInUser(String username, String password);
 
 }

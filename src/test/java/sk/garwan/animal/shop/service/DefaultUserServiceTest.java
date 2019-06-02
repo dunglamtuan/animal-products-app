@@ -5,8 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import com.google.common.hash.Hashing;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,8 +26,7 @@ public class DefaultUserServiceTest {
   @Test
   public void registrationTest() {
     //setup
-    String testPassword = Hashing.sha256().hashString("testPassword", StandardCharsets.UTF_8)
-        .toString();
+    String testPassword = "password";
     User user = User.builder().username("username").email("email1").password(testPassword).build();
     when(userRepository.save(any())).thenReturn(user);
     when(userRepository.findByUsername(anyString())).thenReturn(null);
