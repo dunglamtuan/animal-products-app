@@ -26,7 +26,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     String token = jwtTokenProvider.resolveToken(httpServletRequest);
     try {
-      if (token != null && jwtTokenProvider.validateToken(token)) {
+      if (token != null && jwtTokenProvider.validateToken(token) &&
+          doVerifyUsername(httpServletRequest, token)) {
         Authentication auth = jwtTokenProvider.getAuthentication(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
       }
@@ -36,5 +37,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       return;
     }
     filterChain.doFilter(httpServletRequest, httpServletResponse);
+  }
+
+  private boolean doVerifyUsername(HttpServletRequest httpServletRequest, String token) {
+    String requestUsername = httpServletRequest.getParameter("username");
+    return jwtTokenProvider.extractUsernameFromToken(token).equals(requestUsername);
   }
 }
