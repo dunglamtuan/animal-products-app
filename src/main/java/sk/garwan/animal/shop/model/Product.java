@@ -1,6 +1,7 @@
 package sk.garwan.animal.shop.model;
 
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +27,7 @@ import org.hibernate.annotations.TypeDefs;
 @NoArgsConstructor
 @Builder
 @Data
-public class Product {
+public class Product implements Serializable {
 
   @Id
   @GeneratedValue(generator = "product_id_sequence", strategy = GenerationType.SEQUENCE)

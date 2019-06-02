@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import sk.garwan.animal.shop.model.ApplicationRole;
 import sk.garwan.animal.shop.model.User;
 import sk.garwan.animal.shop.repository.UserRepository;
 
@@ -24,10 +25,14 @@ public class DefaultUserDetail implements UserDetailsService {
       log.warn("User not found for username {}", s);
       throw new UsernameNotFoundException("No user found for username " + s);
     }
+    ApplicationRole[] roles = userByUserName.getIsAdmin() ?
+        new ApplicationRole[] {ApplicationRole.ROLE_USER, ApplicationRole.ROLE_ADMIN} :
+        new ApplicationRole[] {ApplicationRole.ROLE_USER};
 
     return org.springframework.security.core.userdetails.User
         .withUsername(userByUserName.getUsername())
         .password(userByUserName.getPassword())
+        .authorities(roles)
         .accountExpired(false)
         .accountLocked(false)
         .credentialsExpired(false)

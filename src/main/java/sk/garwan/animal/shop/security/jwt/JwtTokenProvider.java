@@ -44,9 +44,7 @@ public class JwtTokenProvider {
 
   public String createToken(String username, List<ApplicationRole> roles) {
 
-    Claims claims = Jwts.claims().setSubject(username);
-    claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority()))
-        .collect(Collectors.toList()));
+    Claims claims = prepareClaims(username, roles);
 
     Instant expiration = Instant.now().plusMillis(validityInMilliseconds);
 
@@ -63,7 +61,7 @@ public class JwtTokenProvider {
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
   }
 
-  private String extractUsernameFromToken(String token) {
+  String extractUsernameFromToken(String token) {
     return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
   }
 
@@ -82,6 +80,14 @@ public class JwtTokenProvider {
     } catch (JwtException | IllegalArgumentException e) {
       throw new JWTException("Expired or invalid JWT token");
     }
+  }
+
+  private Claims prepareClaims(String username, List<ApplicationRole> roles) {
+    Claims claims = Jwts.claims().setSubject(username);
+    claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority()))
+        .collect(Collectors.toList()));
+
+    return claims;
   }
 
 }
