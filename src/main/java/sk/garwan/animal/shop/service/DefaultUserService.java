@@ -65,7 +65,7 @@ public class DefaultUserService implements UserService {
     return persistedUser;
   }
 
-  private List<ApplicationRole> grantRoles(User user) {
+  public List<ApplicationRole> grantRoles(User user) {
 
     List<ApplicationRole> grantList = new ArrayList<>();
     grantList.add(ApplicationRole.ROLE_USER);
