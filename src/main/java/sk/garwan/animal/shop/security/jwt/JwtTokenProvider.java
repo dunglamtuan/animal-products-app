@@ -11,16 +11,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import sk.garwan.animal.shop.exception.JWTException;
 import sk.garwan.animal.shop.model.ApplicationRole;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
 
@@ -48,12 +51,15 @@ public class JwtTokenProvider {
 
     Instant expiration = Instant.now().plusMillis(validityInMilliseconds);
 
-    return Jwts.builder()
+    String token = Jwts.builder()
         .setClaims(claims)
         .setIssuedAt(Date.from(Instant.now()))
         .setExpiration(Date.from(expiration))
         .signWith(SignatureAlgorithm.HS256, secretKey)
         .compact();
+    Authentication auth = getAuthentication(token);
+    SecurityContextHolder.getContext().setAuthentication(auth);
+    return token;
   }
 
   public Authentication getAuthentication(String token) {

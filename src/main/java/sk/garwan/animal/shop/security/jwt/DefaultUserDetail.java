@@ -1,5 +1,6 @@
 package sk.garwan.animal.shop.security.jwt;
 
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,19 +20,19 @@ public class DefaultUserDetail implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-    User userByUserName = userRepository.findByUsername(s);
+    Optional<User> userByUserName = userRepository.findByUsername(s);
 
-    if (userByUserName == null) {
+    if (!userByUserName.isPresent()) {
       log.warn("User not found for username {}", s);
       throw new UsernameNotFoundException("No user found for username " + s);
     }
-    ApplicationRole[] roles = userByUserName.getIsAdmin() ?
+    ApplicationRole[] roles = userByUserName.get().getIsAdmin() ?
         new ApplicationRole[] {ApplicationRole.ROLE_USER, ApplicationRole.ROLE_ADMIN} :
         new ApplicationRole[] {ApplicationRole.ROLE_USER};
 
     return org.springframework.security.core.userdetails.User
-        .withUsername(userByUserName.getUsername())
-        .password(userByUserName.getPassword())
+        .withUsername(userByUserName.get().getUsername())
+        .password(userByUserName.get().getPassword())
         .authorities(roles)
         .accountExpired(false)
         .accountLocked(false)

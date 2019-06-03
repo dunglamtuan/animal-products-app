@@ -40,11 +40,14 @@ public class OrderController {
       @PathParam("username") String username) {
 
     try {
-      orderService.confirmNewOrder(items, username);
-      return new ResponseEntity<>("Order created", HttpStatus.CREATED);
+      boolean isCreated = orderService.confirmNewOrder(items, username);
+      if (isCreated) {
+        return new ResponseEntity<>("Order created", HttpStatus.CREATED);
+      }
+      return new ResponseEntity<>("Order not created", HttpStatus.CONFLICT);
     } catch (RuntimeException ex) {
       log.error("Error when creating a new order ", ex);
-      return new ResponseEntity<>("Order created", HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>("Order can not be created", HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

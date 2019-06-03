@@ -9,5 +9,6 @@ public interface UserService {
   Optional<String> registerNewUser(User user) throws UserAlreadyExistsException;
   User findUserByUserName(String username);
   Optional<String> logInUser(String username, String password);
+  Optional<String> logInAdmin(String username, String password);
 
 }

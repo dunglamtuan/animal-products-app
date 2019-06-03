@@ -8,5 +8,5 @@ public interface OrderService {
 
   List<Order> findOrderByUserName(String username);
   boolean confirmNewOrder(List<CartItem> items, String username);
-
+  List<Order> findOrdersWithPagination(Integer page, Integer pSize);
 }

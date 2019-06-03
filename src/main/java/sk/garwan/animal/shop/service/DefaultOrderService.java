@@ -5,10 +5,14 @@ import static java.util.stream.Collectors.toList;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -37,25 +41,38 @@ public class DefaultOrderService implements OrderService{
   public List<Order> findOrderByUserName(String username) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     log.info("Principal: {}", authentication.getPrincipal().toString());
-    return orderRepository.findAllByUser(userRepository.findByUsername(username));
+
+    Optional<User> user = userRepository.findByUsername(username);
+    return user.map(orderRepository::findAllByUser).orElse(Collections.emptyList());
   }
 
   @Transactional(rollbackFor = RuntimeException.class)
   @Override
   public boolean confirmNewOrder(List<CartItem> items, String username) {
+    Optional<User> userByUsername = userRepository.findByUsername(username);
+    if (!userByUsername.isPresent()) {
+      return false;
+    }
+
     BigDecimal totalPrice = getTotalPrice(items);
     Timestamp created = Timestamp.from(Instant.now());
-    User userByUsername = userRepository.findByUsername(username);
+
     log.info("new Order: totalPrice={}, created={}, user={}", totalPrice, created, userByUsername);
 
     Order savedOrder = orderRepository.save(
         Order.builder().createdAt(created).orderStatus(OrderStatus.RECEIVED).totalPrice(totalPrice)
-            .user(userByUsername).build());
+            .user(userByUsername.get()).build());
 
     List<OrderProductDetail> orderProductDetails = makeOrderProductDetails(items, savedOrder);
     orderDetailRepository.saveAll(orderProductDetails);
 
     return true;
+  }
+
+  @Override
+  public List<Order> findOrdersWithPagination(Integer page, Integer pSize) {
+    Pageable pageRequest = PageRequest.of(page, pSize);
+    return orderRepository.findAll(pageRequest).getContent();
   }
 
   private BigDecimal getTotalPrice(List<CartItem> items) {
