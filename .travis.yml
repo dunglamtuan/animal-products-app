@@ -14,9 +14,8 @@ addons:
       - postgresql-11
 before_install:
   - sudo apt-get update
-  - sudo apt-get --yes remove postgresql-9.2
-  - sudo apt-get install -y postgresql-11 postgresql-client-11
-  - sudo service postgresql restart 11
+  - sudo /etc/init.d/postgresql stop
+  - sudo service postgresql start 11
 before_script:
   - psql -c 'create database animal-product-eshop;' -U postgres
   - psql -c 'create database animal-product-eshop-test;' -U postgres
