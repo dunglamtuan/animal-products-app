@@ -1,6 +1,7 @@
 package sk.garwan.animal.shop.model;
 
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
@@ -22,7 +23,8 @@ import org.hibernate.annotations.TypeDefs;
 
 @Entity
 @Table(name = "product")
-@TypeDefs({@TypeDef(name = "string-array", typeClass = StringArrayType.class)})
+@TypeDefs({@TypeDef(name = "string-array", typeClass = StringArrayType.class),
+    @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)})
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -39,6 +41,7 @@ public class Product implements Serializable {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "animalcategory")
+  @Type(type = "pgsql_enum")
   private AnimalCategory animalCategory;
 
   @Column
