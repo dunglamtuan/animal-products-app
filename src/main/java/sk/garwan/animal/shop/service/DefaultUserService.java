@@ -40,18 +40,30 @@ public class DefaultUserService implements UserService {
 
   @Override
   public User findUserByUserName(String username) {
-    return userRepository.findByUsername(username);
+    return userRepository.findByUsername(username).orElse(null);
   }
 
   @Override
   public Optional<String> logInUser(String username, String password) {
     log.info("logInUser({},{})", username, password);
 
-    User userByUsername = userRepository.findByUsername(username);
-    boolean passwordMatched = passwordEncoder.matches(password, userByUsername.getPassword());
+    Optional<User> userByUsername = userRepository.findByUsername(username);
+    boolean passwordMatched = userByUsername
+        .map(user -> verifyUserPassword(user, password))
+        .orElse(false);
 
-    return passwordMatched ? Optional
-        .of(jwtTokenProvider.createToken(username, grantRoles(userByUsername))) : Optional.empty();
+    return grantTokenIfPasswordsMatch(passwordMatched, userByUsername.get());
+  }
+
+  @Override
+  public Optional<String> logInAdmin(String username, String password) {
+    log.info("logInAdmin({},{})", username, password);
+
+    Optional<User> adminUser = userRepository.findByUsernameAndIsAdmin(username, true);
+    boolean passwordMatched = adminUser
+        .map(user -> verifyUserPassword(user, password))
+        .orElse(false);
+    return grantTokenIfPasswordsMatch(passwordMatched, adminUser.get());
   }
 
   private User preparePersistedUser(User user) {
@@ -76,6 +88,15 @@ public class DefaultUserService implements UserService {
   }
 
   private boolean isUserExisted(String username) {
-    return userRepository.findByUsername(username) != null;
+    return userRepository.findByUsername(username).isPresent();
+  }
+
+  private Optional<String> grantTokenIfPasswordsMatch(boolean isPasswordMatch, User user) {
+    return isPasswordMatch ? Optional
+        .of(jwtTokenProvider.createToken(user.getUsername(), grantRoles(user))) : Optional.empty();
+  }
+
+  private boolean verifyUserPassword(User dbUser, String inputPassword) {
+    return passwordEncoder.matches(inputPassword, dbUser.getPassword());
   }
 }

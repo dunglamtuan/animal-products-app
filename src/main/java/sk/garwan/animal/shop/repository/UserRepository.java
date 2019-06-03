@@ -8,7 +8,10 @@ import sk.garwan.animal.shop.model.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-  User findByUsername(String username);
+  Optional<User> findByUsername(String username);
+
   Optional<User> findByUsernameAndPassword(String username, String password);
+
+  Optional<User> findByUsernameAndIsAdmin(String username, Boolean isAdmin);
 
 }
