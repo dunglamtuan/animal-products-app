@@ -11,4 +11,6 @@ public interface ProductService {
 
   List<MinimalProduct> findProductsWithPageAndSort(int page, int pageSize, String asc);
 
+  Product addNewProduct(Product product);
+
 }

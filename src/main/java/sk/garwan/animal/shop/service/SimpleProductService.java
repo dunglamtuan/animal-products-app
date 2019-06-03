@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sk.garwan.animal.shop.model.MinimalProduct;
 import sk.garwan.animal.shop.model.Product;
 import sk.garwan.animal.shop.repository.MinimalProductRepository;
@@ -37,5 +38,11 @@ public class SimpleProductService implements ProductService {
     }
 
     return minimalProductRepository.findAll(pageable).getContent();
+  }
+
+  @Transactional(rollbackFor = RuntimeException.class)
+  @Override
+  public Product addNewProduct(Product product) {
+    return productRepository.save(product);
   }
 }
