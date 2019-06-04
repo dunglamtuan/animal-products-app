@@ -7,11 +7,6 @@ jdk:
 sudo: required
 services:
   - postgresql
-addons:
-  postgresql: "11"
-  apt:
-    packages:
-      - postgresql-11
 before_install:
   - sudo apt-get update
   - sudo /etc/init.d/postgresql stop
