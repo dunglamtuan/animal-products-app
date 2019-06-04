@@ -1,0 +1,26 @@
+version: "3"
+services:
+  postgres:
+    build: postgres/
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: animal-product-eshop
+      TEST_POSTGRES_DB: animal-product-eshop-test
+      TZ: Europe/Bratislava
+      PGTZ: Europe/Bratislava
+    ports:
+      - "5432:5432"
+    container_name: app_db
+
+  be-app:
+    build: .
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    environment:
+      POSTGRES_DATABASE_URL: jdbc:postgresql://postgres:5432/animal-product-eshop
+    ports:
+      - "8080:8080"
