@@ -2,7 +2,6 @@ package sk.garwan.animal.shop.controller;
 
 import java.util.List;
 import java.util.Optional;
-import javax.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -49,7 +48,7 @@ public class AdminController {
       @RequestParam("page") Integer page,
       @RequestParam("pSize") Integer pageSize) {
 
-    log.info("Username {}", userDetails.getUsername());
+    log.debug("Username {}", userDetails.getUsername());
     List<Order> orders = orderService.findOrdersWithPagination(page, pageSize);
     return new ResponseEntity<>(orders, HttpStatus.OK);
   }
@@ -61,7 +60,7 @@ public class AdminController {
     try {
       return new ResponseEntity<>(productService.addNewProduct(product), HttpStatus.CREATED);
     } catch (RuntimeException ex) {
-      log.warn("Error when adding a new product ", ex);
+      log.error("Error when adding a new product ", ex);
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

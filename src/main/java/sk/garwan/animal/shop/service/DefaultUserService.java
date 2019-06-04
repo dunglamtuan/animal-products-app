@@ -27,7 +27,7 @@ public class DefaultUserService implements UserService {
   @Transactional
   @Override
   public Optional<String> registerNewUser(User user) {
-    log.info("registerNewUser({})", user);
+    log.debug("registerNewUser({})", user);
 
     if (isUserExisted(user.getUsername())) {
       return Optional.empty();
@@ -45,7 +45,7 @@ public class DefaultUserService implements UserService {
 
   @Override
   public Optional<String> logInUser(String username, String password) {
-    log.info("logInUser({},{})", username, password);
+    log.debug("logInUser({},{})", username, password);
 
     Optional<User> userByUsername = userRepository.findByUsername(username);
     boolean passwordMatched = userByUsername
@@ -57,7 +57,7 @@ public class DefaultUserService implements UserService {
 
   @Override
   public Optional<String> logInAdmin(String username, String password) {
-    log.info("logInAdmin({},{})", username, password);
+    log.debug("logInAdmin({},{})", username, password);
 
     Optional<User> adminUser = userRepository.findByUsernameAndIsAdmin(username, true);
     boolean passwordMatched = adminUser
@@ -73,7 +73,7 @@ public class DefaultUserService implements UserService {
     persistedUser.setIsAdmin(Boolean.FALSE);
     persistedUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
-    log.info("persisted user: {}", persistedUser);
+    log.debug("persisted user: {}", persistedUser);
     return persistedUser;
   }
 

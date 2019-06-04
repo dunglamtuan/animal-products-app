@@ -28,7 +28,7 @@ public class OrderController {
   @GetMapping("/auth")
   public ResponseEntity<List<Order>> handleOrdersRequestByUser(
       @PathParam("username") String username) {
-    log.info("handleOrdersRequestByUser -> {}", username);
+    log.debug("handleOrdersRequestByUser -> {}", username);
 
     return new ResponseEntity<>(orderService.findOrderByUserName(username), HttpStatus.OK);
   }

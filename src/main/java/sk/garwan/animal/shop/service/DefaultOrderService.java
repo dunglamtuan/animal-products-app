@@ -13,8 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sk.garwan.animal.shop.entity.CartItem;
@@ -39,8 +37,6 @@ public class DefaultOrderService implements OrderService{
 
   @Override
   public List<Order> findOrderByUserName(String username) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    log.info("Principal: {}", authentication.getPrincipal().toString());
 
     Optional<User> user = userRepository.findByUsername(username);
     return user.map(orderRepository::findAllByUser).orElse(Collections.emptyList());
@@ -57,7 +53,7 @@ public class DefaultOrderService implements OrderService{
     BigDecimal totalPrice = getTotalPrice(items);
     Timestamp created = Timestamp.from(Instant.now());
 
-    log.info("new Order: totalPrice={}, created={}, user={}", totalPrice, created, userByUsername);
+    log.debug("new Order: totalPrice={}, created={}, user={}", totalPrice, created, userByUsername);
 
     Order savedOrder = orderRepository.save(
         Order.builder().createdAt(created).orderStatus(OrderStatus.RECEIVED).totalPrice(totalPrice)
