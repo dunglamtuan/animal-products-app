@@ -8,13 +8,15 @@ sudo: required
 services:
   - postgresql
 addons:
-  postgresql: "11"
+  postgresql: '9.6'
 before_script:
-  - psql -c 'create database animal-product-eshop;' -U postgres
-  - psql -c 'create database animal-product-eshop-test;' -U postgres
-  - psql -c 'GRANT ALL ON DATABASE animal-product-eshop TO postgres;' -U postgres
-  - psql -c 'GRANT ALL ON DATABASE aanimal-product-eshop-test TO postgres;' -U postgres
+  - psql -c 'create database "animal-product-eshop";' -U postgres
+  - psql -c 'create database "animal-product-eshop-test";' -U postgres
+  - psql -c 'GRANT ALL ON DATABASE "animal-product-eshop" TO postgres;' -U postgres
+  - psql -c 'GRANT ALL ON DATABASE "animal-product-eshop-test" TO postgres;' -U postgres
 script:
   - mvn test
 env:
-  - TEST_DATABASE_URL=jdbc:postgresql://localhost:5432/animal-product-eshop-test
+  global:
+    - PGPORT=5432
+    - TEST_DATABASE_URL=jdbc:postgresql://localhost:5432/animal-product-eshop-test
