@@ -8,11 +8,7 @@ sudo: required
 services:
   - postgresql
 addons:
-  postgresql: "10"
-  apt:
-    packages:
-    - postgresql-10
-    - postgresql-client-10
+  postgresql: '9.6'
 before_script:
   - psql -c 'create database "animal-product-eshop";' -U postgres
   - psql -c 'create database "animal-product-eshop-test";' -U postgres
