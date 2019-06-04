@@ -35,7 +35,7 @@ public class AdminController {
 
   @GetMapping("/login")
   public ResponseEntity<JwtTokenResponse> handleAdminLogInRequest(
-      @PathParam("username") String username, @PathParam("password") String password) {
+      @RequestParam("username") String username, @RequestParam("password") String password) {
 
     Optional<String> token = userService.logInAdmin(username, password);
     return token.map(t -> new ResponseEntity<>(new JwtTokenResponse(t), HttpStatus.OK))
@@ -57,7 +57,7 @@ public class AdminController {
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/products")
   public ResponseEntity<Product> handleAddNewProductRequest(@RequestBody Product product,
-      @PathParam("username") String username) {
+      @RequestParam("username") String username) {
     try {
       return new ResponseEntity<>(productService.addNewProduct(product), HttpStatus.CREATED);
     } catch (RuntimeException ex) {
