@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "583dff84-5697-476b-b66d-93278f8d5abd",
+		"name": "garwan-animals-heroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user-registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"user1\",\n\t\"password\": \"1111\",\n\t\"email\": \"email1\"\n}"
+				},
+				"url": {
+					"raw": "https://animal-products.herokuapp.com/users/reg",
+					"protocol": "https",
+					"host": [
+						"animal-products",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"reg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "products_list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://animal-products.herokuapp.com/products?page=0&pSize=2&sorting=desc",
+					"protocol": "https",
+					"host": [
+						"animal-products",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "pSize",
+							"value": "2"
+						},
+						{
+							"key": "sorting",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product_detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://animal-products.herokuapp.com/products/-39",
+					"protocol": "https",
+					"host": [
+						"animal-products",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"products",
+						"-39"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://animal-products.herokuapp.com/users/login?username=user1&password=1111",
+					"protocol": "https",
+					"host": [
+						"animal-products",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "user1"
+						},
+						{
+							"key": "password",
+							"value": "1111"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_order_get",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiaWF0IjoxNTU5NjgwNjU5LCJleHAiOjE1NTk2ODQyNTl9.QlIToi2hSTxUSFCLl53ynrd-nSLUNFWbtFDLI5OS-8s",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://animal-products.herokuapp.com/orders/auth?username=user1",
+					"protocol": "https",
+					"host": [
+						"animal-products",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"orders",
+						"auth"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "user1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_new_order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiaWF0IjoxNTU5NjgwNjU5LCJleHAiOjE1NTk2ODQyNTl9.QlIToi2hSTxUSFCLl53ynrd-nSLUNFWbtFDLI5OS-8s",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"productName\": \"product_by_endpoint\",\n\t\t\"productPrice\": 66.66,\n\t\t\"amount\": 2\n\t}\n]"
+				},
+				"url": {
+					"raw": "https://animal-products.herokuapp.com/orders/auth?username=user1",
+					"protocol": "https",
+					"host": [
+						"animal-products",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"orders",
+						"auth"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "user1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin_login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://animal-products.herokuapp.com/admin/login?username=admin&password=admin",
+					"protocol": "https",
+					"host": [
+						"animal-products",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin_orders",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMiIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9XSwiaWF0IjoxNTU5NTg3ODA5LCJleHAiOjE1NTk1OTE0MDl9.hvKDh0nWFB76423LUB5ZUW15ZqWtK1ILUy9xnxvu0rs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://animal-products.herokuapp.com/admin/orders?username=user2&page=0&pSize=1",
+					"protocol": "https",
+					"host": [
+						"animal-products",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "user2"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "pSize",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin_new_product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9XSwiaWF0IjoxNTU5NjgzMzIxLCJleHAiOjE1NTk2ODY5MjF9.rXI5DxpTeinKUO7le3ogXhwEmd5Abk0tVCdyCA6MQeA",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"product_by_endpoint_1\",\n    \"animalCategory\": \"OTHER\",\n    \"price\": 166.616,\n    \"description\": \"product_by_endpoint has price of 166.616\",\n    \"gallery\": [\n        \"link166.616\",\n        \"link166.6116\"\n    ]\n}"
+				},
+				"url": {
+					"raw": "https://animal-products.herokuapp.com/admin/products?username=admin",
+					"protocol": "https",
+					"host": [
+						"animal-products",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"products"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
