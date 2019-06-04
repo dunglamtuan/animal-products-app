@@ -1,5 +1,8 @@
 package sk.garwan.animal.shop.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import javax.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
@@ -24,6 +27,10 @@ public class OrderController {
 
   private final DefaultOrderService orderService;
 
+  @ApiOperation(value = "${OrderController.handleOrdersRequestByUser}")
+  @ApiResponses(value = {
+      @ApiResponse(code = 403, message = "Unauthorized"),
+      @ApiResponse(code = 200, message = "List of orders by user")})
   @PreAuthorize("hasRole('ROLE_USER')")
   @GetMapping("/auth")
   public ResponseEntity<List<Order>> handleOrdersRequestByUser(
@@ -33,6 +40,12 @@ public class OrderController {
     return new ResponseEntity<>(orderService.findOrderByUserName(username), HttpStatus.OK);
   }
 
+  @ApiOperation(value = "${OrderController.handleNewOrderRequestByUser}")
+  @ApiResponses(value = {
+      @ApiResponse(code = 403, message = "Unauthorized"),
+      @ApiResponse(code = 201, message = "New order is created"),
+      @ApiResponse(code = 409, message = "Username in params is not as in token"),
+      @ApiResponse(code = 500, message = "Error when creating a new order")})
   @PreAuthorize("hasRole('ROLE_USER')")
   @PostMapping("/auth")
   public ResponseEntity<String> handleNewOrderRequestByUser(

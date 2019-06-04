@@ -1,5 +1,8 @@
 package sk.garwan.animal.shop.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -19,6 +22,9 @@ public class ProductController {
 
   private final ProductService service;
 
+  @ApiOperation(value = "${ProductController.handleProductsGetRequest}")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "List of products")})
   @GetMapping(value = "/products")
   public ResponseEntity<List<MinimalProduct>> handleProductsGetRequest(
     @RequestParam("page") int page,
@@ -29,6 +35,10 @@ public class ProductController {
     return new ResponseEntity<>(resultProducts, HttpStatus.OK);
   }
 
+  @ApiOperation(value = "${ProductController.handleProductByIdGetRequest}")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Product"),
+      @ApiResponse(code = 404, message = "None product was found")})
   @GetMapping(value = "/products/{id}")
   public ResponseEntity<Product> handleProductByIdGetRequest(@PathVariable("id") Integer id) {
 

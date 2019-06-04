@@ -1,5 +1,8 @@
 package sk.garwan.animal.shop.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -32,6 +35,10 @@ public class AdminController {
   private final DefaultOrderService orderService;
   private final SimpleProductService productService;
 
+  @ApiOperation(value = "${AdminController.handleAdminLogInRequest}")
+  @ApiResponses(value = {
+      @ApiResponse(code = 403, message = "Unauthorized"),
+      @ApiResponse(code = 200, message = "Token created")})
   @GetMapping("/login")
   public ResponseEntity<JwtTokenResponse> handleAdminLogInRequest(
       @RequestParam("username") String username, @RequestParam("password") String password) {
@@ -41,6 +48,10 @@ public class AdminController {
         .orElseGet(() -> new ResponseEntity<>(new JwtTokenResponse(null), HttpStatus.UNAUTHORIZED));
   }
 
+  @ApiOperation(value = "${AdminController.handleAdminAllOrdersRequest}")
+  @ApiResponses(value = {
+      @ApiResponse(code = 403, message = "Unauthorized"),
+      @ApiResponse(code = 200, message = "List of order with pagination")})
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("/orders")
   public ResponseEntity<List<Order>> handleAdminAllOrdersRequest(
@@ -53,6 +64,11 @@ public class AdminController {
     return new ResponseEntity<>(orders, HttpStatus.OK);
   }
 
+  @ApiOperation(value = "${AdminController.handleAddNewProductRequest}")
+  @ApiResponses(value = {
+      @ApiResponse(code = 403, message = "Unauthorized"),
+      @ApiResponse(code = 201, message = "Created a new product"),
+      @ApiResponse(code = 500, message = "Internal server error")})
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/products")
   public ResponseEntity<Product> handleAddNewProductRequest(@RequestBody Product product,

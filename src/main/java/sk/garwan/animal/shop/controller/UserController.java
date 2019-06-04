@@ -1,5 +1,8 @@
 package sk.garwan.animal.shop.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +27,10 @@ public class UserController {
 
   private final DefaultUserService userService;
 
+  @ApiOperation(value = "${UserController.handleUserRegistrationRequest}")
+  @ApiResponses(value = {
+      @ApiResponse(code = 201, message = "New user is created"),
+      @ApiResponse(code = 409, message = "User is already existed")})
   @PostMapping("/reg")
   public ResponseEntity<JwtTokenResponse> handleUserRegistrationRequest(@RequestBody User user) {
 
@@ -33,6 +40,10 @@ public class UserController {
         .orElseGet(() -> new ResponseEntity<>(new JwtTokenResponse(null), HttpStatus.CONFLICT));
   }
 
+  @ApiOperation(value = "${UserController.handleLoginRequest}")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Token is created"),
+      @ApiResponse(code = 403, message = "Invalid username/password")})
   @GetMapping("/login")
   @ResponseBody
   public ResponseEntity<JwtTokenResponse> handleLoginRequest(

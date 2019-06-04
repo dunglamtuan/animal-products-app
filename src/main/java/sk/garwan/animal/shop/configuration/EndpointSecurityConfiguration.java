@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import sk.garwan.animal.shop.security.jwt.JwtTokenFilterConfigurer;
 import sk.garwan.animal.shop.security.jwt.JwtTokenProvider;
 
@@ -19,14 +18,8 @@ import sk.garwan.animal.shop.security.jwt.JwtTokenProvider;
 @AllArgsConstructor
 public class EndpointSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  //private final DefaultUserService userService;
-  //private final PasswordEncoder passwordEncoder;
   private final JwtTokenProvider provider;
 
-//  @Override
-//  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//    auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
-//  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -37,6 +30,7 @@ public class EndpointSecurityConfiguration extends WebSecurityConfigurerAdapter 
 
     http.authorizeRequests()
         .antMatchers("**/users/auth/login").authenticated()
+        .antMatchers("**/admin/auth/login").authenticated()
         .anyRequest().permitAll();
 
     http.apply(new JwtTokenFilterConfigurer(provider));
@@ -47,11 +41,5 @@ public class EndpointSecurityConfiguration extends WebSecurityConfigurerAdapter 
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
   }
-
-//  @Override
-//  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//    auth.parentAuthenticationManager(authenticationManagerBean())
-//        .userDetailsService(userService);
-//  }
 
 }
