@@ -7,10 +7,6 @@ jdk:
 sudo: required
 services:
   - postgresql
-before_install:
-  - sudo apt-get update
-  - sudo /etc/init.d/postgresql stop
-  - sudo service postgresql start 11
 before_script:
   - psql -c 'create database animal-product-eshop;' -U postgres
   - psql -c 'create database animal-product-eshop-test;' -U postgres
