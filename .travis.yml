@@ -14,7 +14,7 @@ addons:
     - postgresql-10
     - postgresql-client-10
 before_install:
-  - sudo kill `sudo lsof -t -i:5432`
+  - sudo fuser -n tcp -k 5432
 before_script:
   - psql -c 'create database "animal-product-eshop";' -U postgres
   - psql -c 'create database "animal-product-eshop-test";' -U postgres
