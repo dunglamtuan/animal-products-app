@@ -1,7 +1,7 @@
 version: "3"
 services:
   postgres:
-    build: .
+    build: postgres/
     hostname: postgres
     environment:
       POSTGRES_USER: postgres
@@ -13,3 +13,14 @@ services:
     ports:
       - "5432:5432"
     container_name: app_db
+
+  be-app:
+    build: .
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    environment:
+      POSTGRES_DATABASE_URL: jdbc:postgresql://postgres:5432/animal-product-eshop
+    ports:
+      - "8080:8080"

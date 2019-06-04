@@ -1,5 +1,9 @@
-FROM postgres:11
+FROM openjdk:8-jdk-alpine
 
-COPY create-test-db.sh /docker-entrypoint-initdb.d/create-test-db.sh
+VOLUME /tmp
 
-RUN chmod +x /docker-entrypoint-initdb.d/create-test-db.sh
+ARG JAR_FILE
+
+COPY target/app.jar app.jar
+
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
