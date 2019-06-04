@@ -17,10 +17,10 @@ env:
   global:
   - PGPORT=5433
 before_script:
-  - psql -c 'create database "animal-product-eshop";' -U postgres
-  - psql -c 'create database "animal-product-eshop-test";' -U postgres
-  - psql -c 'GRANT ALL ON DATABASE "animal-product-eshop" TO postgres;' -U postgres
-  - psql -c 'GRANT ALL ON DATABASE "animal-product-eshop-test" TO postgres;' -U postgres
+  - psql -c -h localhost:5433 'create database "animal-product-eshop";' -U postgres
+  - psql -c -h localhost:5433 'create database "animal-product-eshop-test";' -U postgres
+  - psql -c -h localhost:5433 'GRANT ALL ON DATABASE "animal-product-eshop" TO postgres;' -U postgres
+  - psql -c -h localhost:5433 'GRANT ALL ON DATABASE "animal-product-eshop-test" TO postgres;' -U postgres
 script:
   - mvn test
 env:
