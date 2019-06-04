@@ -70,7 +70,7 @@ public class DefaultUserService implements UserService {
     User persistedUser = new User();
     persistedUser.setEmail(user.getEmail());
     persistedUser.setUsername(user.getUsername());
-    persistedUser.setIsAdmin(false);
+    persistedUser.setIsAdmin(Boolean.FALSE);
     persistedUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
     log.info("persisted user: {}", persistedUser);
