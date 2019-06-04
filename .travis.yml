@@ -23,4 +23,4 @@ script:
 env:
   global:
     - PGPORT=5432
-  - TEST_DATABASE_URL=jdbc:postgresql://localhost:543/animal-product-eshop-test
+  - TEST_DATABASE_URL=jdbc:postgresql://localhost:5432/animal-product-eshop-test
