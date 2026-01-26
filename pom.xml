@@ -20,7 +20,7 @@
 
     <flyway.version>5.2.4</flyway.version>
     <hibernate-types.version>2.4.3</hibernate-types.version>
-    <assertj-core.version>3.12.2</assertj-core.version>
+    <assertj-core.version>3.27.7</assertj-core.version>
     <jwt.version>0.9.1</jwt.version>
   </properties>
 
